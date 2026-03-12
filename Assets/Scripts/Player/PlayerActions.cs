@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-// Requires Animator to work
-[RequireComponent(typeof(Animator))]
 public class PlayerActions : MonoBehaviour
 {
     // ------ Editor parametres ------
