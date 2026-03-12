@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class PlayerLifeSystem : MonoBehaviour
 {
-    private PlayerController pc;
+    private PlayerActions pa;
     private int playerNum;
     private void Start()
     {
-        pc = gameObject.GetComponent<PlayerController>();
-        if (pc != null )
+        pa = gameObject.GetComponentInParent<PlayerActions>();
+        if (pa != null )
         {
-            playerNum = pc.GetPlayerNumber();
+            playerNum = pa.GetPlayerNumber();
         }
         else
         {
@@ -31,7 +31,7 @@ public class PlayerLifeSystem : MonoBehaviour
         if (GameManager.instance != null)
         {
             // Not blocking, take n damage
-            if (!pc.GetBlockingState())
+            if (!pa.GetBlockingState())
             {
                 GameManager.instance.AddHp(-n, playerNum);
             }

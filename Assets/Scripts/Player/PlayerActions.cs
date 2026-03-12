@@ -87,4 +87,12 @@ public class PlayerActions : MonoBehaviour
         grounded = true;
         velocity = 0;
     }
+    public int GetPlayerNumber()
+    {
+        return _playerNum;
+    }
+    public bool GetBlockingState()
+    {
+        return _isBlocking;
+    }
 }
