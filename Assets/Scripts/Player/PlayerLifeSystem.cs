@@ -16,11 +16,6 @@ public class PlayerLifeSystem : MonoBehaviour
             Debug.LogError("No PlayerController attached to gameObject");
             Destroy(this);
         }
-        // Subscribes to the game over event if theres a GameManager 
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.GameOver.AddListener(EndGame);
-        }
     }
     /// <summary>
     /// Removes n hitpoints from the player if theres a GameManager present, 
@@ -37,11 +32,5 @@ public class PlayerLifeSystem : MonoBehaviour
             }
             
         }
-    }
-    // Dissapears when game is over, unsubscribes from event
-    private void EndGame()
-    {
-        gameObject.SetActive(false);
-        GameManager.instance.GameOver.RemoveListener(EndGame); // Stops subscribing to event, damage control
     }
 }

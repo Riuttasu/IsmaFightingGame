@@ -42,12 +42,12 @@ public class PlayerActions : MonoBehaviour
         // Punch action
         if (_punchAction != null && _punchAction.WasPressedThisFrame() && !isDoingAction && !isblocking)
         {
-            _animator.SetTrigger("PunchTrigger");
+            
         }
         // Block action
         else if (_blockAction != null && _blockAction.WasPressedThisFrame() && !isDoingAction && !isblocking)
         {
-            //Block();
+            Block();
         }
         // Move action
         else if (_moveAction != null && _moveAction.IsPressed() && !isDoingAction && !isblocking)
@@ -74,6 +74,15 @@ public class PlayerActions : MonoBehaviour
         {
             transform.position += new Vector3(dir.x * _speed * Time.deltaTime, 0, 0);
         }
+    }
+    private void Punch()
+    {
+        _animator.SetTrigger("PunchTrigger");
+    }
+    private void Block()
+    {
+
+        _isBlocking = false;
     }
     private void Jump()
     {
