@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.99997497, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5362133309350709058}
@@ -436,6 +436,12 @@ MonoBehaviour:
   _speed: 5
   _jumpHeight: 8
   _animator: {fileID: 6988388854679523299}
+  _playerInputs:
+  - _name: Move
+  - _name: Jump
+  - _name: Punch
+  - _name: Block
+  - _name: Crush
 --- !u!114 &3939014165448322766
 MonoBehaviour:
   m_ObjectHideFlags: 0

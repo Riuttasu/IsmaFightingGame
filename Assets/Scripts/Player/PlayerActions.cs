@@ -1,17 +1,34 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+[System.Serializable]
+public class PlayerInputActions
+{
+    [SerializeField] private string _name;
+    public string Name
+    { get { return _name; } }
+    private InputAction _assignedAction;
+    public InputAction AssignedAction
+    {
+        get { return _assignedAction; }
+        set { _assignedAction = value; }
+    }
+}
 public class PlayerActions : MonoBehaviour
 {
     // ------ Editor parametres ------
     #region Editor parametres
-    [Header("Attack Parametres")]
+    [Header("Player info")]
     [SerializeField] private int _playerNum = 1;
+    [Header("Attack Parametres")]
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _jumpHeight = 3f;
     [Header("Player Components")]
     [SerializeField] private Animator _animator;
-    private bool isDoingAction = false; private bool isblocking = false; private bool isCrushing = false;
-    
+    [Header("Actions")]
+    [SerializeField] private List<PlayerInputActions> _playerInputs = new List<PlayerInputActions>();
+    private bool isDoingAction = false; private bool _isBlocking = false; private bool isCrushing = false;
+
     private bool grounded = true;
     // Jump physics
     private float velocity = 0f;
@@ -21,44 +38,29 @@ public class PlayerActions : MonoBehaviour
     // Physics
     private float _velocity = 0f;
     // Actions
-    private bool _isGrounded, _isBlocking, _isDoingAction;
-    // 
-    private InputAction _punchAction, _moveAction, _blockAction, _jumpAction, _crushAction;
+    private bool _isGrounded;
     #endregion
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _punchAction = InputSystem.actions.FindAction("Punch"+_playerNum);
-        _moveAction = InputSystem.actions.FindAction("Move" + _playerNum);
-        _blockAction = InputSystem.actions.FindAction("Block" + _playerNum);
-        _jumpAction = InputSystem.actions.FindAction("Jump" + _playerNum);
-        _crushAction = InputSystem.actions.FindAction("Crush" + _playerNum);
+        foreach (PlayerInputActions action in _playerInputs)
+        {
+            action.AssignedAction = InputSystem.actions.FindAction(action.Name + _playerNum);
+            if (action.AssignedAction == null) { Debug.LogWarning("No action found with the name: " + action.Name + _playerNum); }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Blocking input actions
-        // Punch action
-        if (_punchAction != null && _punchAction.WasPressedThisFrame() && !isDoingAction && !isblocking)
+        foreach (PlayerInputActions act in _playerInputs)
         {
-            
+            if (act.AssignedAction.WasPressedThisFrame())
+            {
+                DoAction(act.Name);
+            }
         }
-        // Block action
-        else if (_blockAction != null && _blockAction.WasPressedThisFrame() && !isDoingAction && !isblocking)
-        {
-            Block();
-        }
-        // Move action
-        else if (_moveAction != null && _moveAction.IsPressed() && !isDoingAction && !isblocking)
-        {
-            Move();
-        }
-        // Non-blocking input actions
-        if (_jumpAction.WasPressedThisFrame() && grounded)
-        {
-            Jump();
-        }
+        // Movement
         // Physics
         if (!grounded)
         {
@@ -66,9 +68,21 @@ public class PlayerActions : MonoBehaviour
             velocity += Physics2D.gravity.y * Time.deltaTime;
         }
     }
+    private void DoAction(string action)
+    {
+        switch(action)
+        {
+            case "Move": break;
+            case "Block": break;
+            case "Punch": Punch(); break;
+            case "Jump": break;
+            case "Crush": break;
+            default: break;
+        }
+    }
     private void Move()
     {
-        Vector2 dir = _moveAction.ReadValue<Vector2>();
+        Vector2 dir = InputSystem.actions.FindAction("Move"+_playerNum).ReadValue<Vector2>();
         Vector3 origin = new(transform.position.x, transform.position.y, 0);
         if (!Physics2D.Raycast(origin, dir * Vector2.right, dir.magnitude))
         {
@@ -77,18 +91,16 @@ public class PlayerActions : MonoBehaviour
     }
     private void Punch()
     {
-        _animator.SetTrigger("PunchTrigger");
-    }
-    private void Block()
-    {
-
-        _isBlocking = false;
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        { _animator.SetTrigger("PunchTrigger"); }
     }
     private void Jump()
     {
         velocity += _jumpHeight;
         grounded = false;
     }
+    // ---- Public methods ----
+    #region Public methods
     public void Ground()
     {
         grounded = true;
@@ -102,4 +114,5 @@ public class PlayerActions : MonoBehaviour
     {
         return _isBlocking;
     }
+    #endregion
 }

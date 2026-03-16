@@ -1,19 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-[System.Serializable]
-public class PlayerInputActions
-{
-    [SerializeField] private string _name;
-    public string Name
-    { get { return _name; } }
-    private InputAction _assignedAction;
-    public InputAction AssignedAction
-    {
-        get { return _assignedAction; }
-        set { _assignedAction = value; }
-    }
-}
+
 public class PlayerInput : MonoBehaviour
 {
     // Player number 
