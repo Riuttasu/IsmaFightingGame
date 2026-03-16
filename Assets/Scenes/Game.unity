@@ -427,6 +427,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1634583553320400464, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
+      propertyPath: _playerNum
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2806322401711650064, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -438,7 +442,7 @@ PrefabInstance:
     - target: {fileID: 3939014165448322766, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
       propertyPath: objPos
       value: 
-      objectReference: {fileID: 159780563}
+      objectReference: {fileID: 1104579537}
     - target: {fileID: 5362133309350709058, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6
@@ -790,6 +794,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919491830}
   m_CullTransparentMesh: 1
+--- !u!4 &1104579537 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5362133309350709058, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
+  m_PrefabInstance: {fileID: 1445530316}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1203822736 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5297565538215474957, guid: 20de97dea36cdec438ee60796044139d, type: 3}
@@ -911,30 +920,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 36344476606421710, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
-      propertyPath: _playerInputs.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 36344476606421710, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
-      propertyPath: _playerInputs.Array.data[0]._name
-      value: Move
-      objectReference: {fileID: 0}
-    - target: {fileID: 36344476606421710, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
-      propertyPath: _playerInputs.Array.data[1]._name
-      value: Jump
-      objectReference: {fileID: 0}
-    - target: {fileID: 36344476606421710, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
-      propertyPath: _playerInputs.Array.data[2]._name
-      value: Block
-      objectReference: {fileID: 0}
-    - target: {fileID: 36344476606421710, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
-      propertyPath: _playerInputs.Array.data[3]._name
-      value: Crush
-      objectReference: {fileID: 0}
-    - target: {fileID: 36344476606421710, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
-      propertyPath: _playerInputs.Array.data[4]._name
-      value: Punch
-      objectReference: {fileID: 0}
     - target: {fileID: 504358749359355434, guid: 994701e6428e0e44e86d730be8070f6d, type: 3}
       propertyPath: m_Layer
       value: 6

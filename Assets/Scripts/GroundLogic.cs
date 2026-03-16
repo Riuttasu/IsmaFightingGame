@@ -4,10 +4,10 @@ public class GroundLogic : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        PlayerActions pa = collision.gameObject.GetComponentInParent<PlayerActions>();
-        if (pa != null)
+        PlayerMovement pm = collision.gameObject.GetComponentInParent<PlayerMovement>();
+        if (pm != null)
         {
-            pa.Ground();
+            pm.Ground();
         }
     }
 }

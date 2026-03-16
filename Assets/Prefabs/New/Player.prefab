@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99997497, y: 1, z: 1}
+  m_LocalScale: {x: 0.999975, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5362133309350709058}
@@ -172,7 +172,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5362133309350709058}
@@ -221,7 +221,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2, y: 4}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &7437946437446996952
 Rigidbody2D:
@@ -392,6 +392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5362133309350709058}
   - component: {fileID: 36344476606421710}
+  - component: {fileID: 1634583553320400464}
   - component: {fileID: 3939014165448322766}
   - component: {fileID: 410767253175115514}
   - component: {fileID: 1304915100005809760}
@@ -412,7 +413,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2525341041403522434}
@@ -433,15 +434,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerNum: 1
-  _speed: 5
-  _jumpHeight: 8
   _animator: {fileID: 6988388854679523299}
   _playerInputs:
-  - _name: Move
-  - _name: Jump
   - _name: Punch
   - _name: Block
   - _name: Crush
+--- !u!114 &1634583553320400464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6829621510376732279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 541c924ddf210ef469f80c77b07a5702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerNum: 1
+  _playerInputs:
+  - _name: Move
+  - _name: Jump
+  _animator: {fileID: 6988388854679523299}
+  _speed: 5
+  _jumpHeight: 8
 --- !u!114 &3939014165448322766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,7 +483,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250fa1324e2807f4fa8e66d06a6fe0db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _punchHitBox: {fileID: 5798073673857030776}
+  PlayerHurtBox: {fileID: 2034659101648987962}
+  PunchHitBox: {fileID: 5798073673857030776}
+  CrushHitBox: {fileID: 7054462128538695175}
 --- !u!114 &1304915100005809760
 MonoBehaviour:
   m_ObjectHideFlags: 0

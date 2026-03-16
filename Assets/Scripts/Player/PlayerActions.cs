@@ -14,35 +14,24 @@ public class PlayerInputActions
         set { _assignedAction = value; }
     }
 }
+[RequireComponent(typeof(PlayerMovement))]
 public class PlayerActions : MonoBehaviour
 {
     // ------ Editor parametres ------
     #region Editor parametres
     [Header("Player info")]
     [SerializeField] private int _playerNum = 1;
-    [Header("Attack Parametres")]
-    [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _jumpHeight = 3f;
     [Header("Player Components")]
     [SerializeField] private Animator _animator;
     [Header("Actions")]
     [SerializeField] private List<PlayerInputActions> _playerInputs = new List<PlayerInputActions>();
-    private bool isDoingAction = false; private bool _isBlocking = false; private bool isCrushing = false;
-
-    private bool grounded = true;
-    // Jump physics
-    private float velocity = 0f;
     #endregion
-    // ------ parametres ------
-    #region Parametres
-    // Physics
-    private float _velocity = 0f;
-    // Actions
-    private bool _isGrounded;
-    #endregion
+    private bool _isFalling = false; private bool _isBlocking = false; private bool isCrushing = false;
+    private PlayerMovement pm;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        pm = gameObject.GetComponent<PlayerMovement>();
         foreach (PlayerInputActions action in _playerInputs)
         {
             action.AssignedAction = InputSystem.actions.FindAction(action.Name + _playerNum);
@@ -55,61 +44,62 @@ public class PlayerActions : MonoBehaviour
     {
         foreach (PlayerInputActions act in _playerInputs)
         {
-            if (act.AssignedAction.WasPressedThisFrame())
+            if (act.AssignedAction.IsPressed())
             {
                 DoAction(act.Name);
             }
         }
-        // Movement
-        // Physics
-        if (!grounded)
-        {
-            transform.position += new Vector3(0, velocity * Time.deltaTime, 0);
-            velocity += Physics2D.gravity.y * Time.deltaTime;
-        }
     }
+    /// <summary>
+    /// Executes a given action
+    /// </summary>
+    /// <param name="action"></param>
     private void DoAction(string action)
     {
-        switch(action)
+        switch (action)
         {
-            case "Move": break;
-            case "Block": break;
+            case "Block": Block(); break;
             case "Punch": Punch(); break;
-            case "Jump": break;
-            case "Crush": break;
+            case "Crush": Crush(); break;
             default: break;
         }
     }
-    private void Move()
-    {
-        Vector2 dir = InputSystem.actions.FindAction("Move"+_playerNum).ReadValue<Vector2>();
-        Vector3 origin = new(transform.position.x, transform.position.y, 0);
-        if (!Physics2D.Raycast(origin, dir * Vector2.right, dir.magnitude))
-        {
-            transform.position += new Vector3(dir.x * _speed * Time.deltaTime, 0, 0);
-        }
-    }
+
+    // ---- Actions-attacks ----
+    #region Attack Actions
     private void Punch()
     {
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         { _animator.SetTrigger("PunchTrigger"); }
     }
-    private void Jump()
+    private void Block()
     {
-        velocity += _jumpHeight;
-        grounded = false;
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        { _animator.SetTrigger("BlockTrigger"); }
     }
+    private void Crush()
+    {
+        if (!pm.GetGroundedState() && (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || _animator.GetCurrentAnimatorStateInfo(0).IsName("Walking")))
+        {
+            _animator.SetTrigger("FlipTrigger");
+            pm.SetFallingState(true);
+        }
+    }
+    #endregion
     // ---- Public methods ----
     #region Public methods
-    public void Ground()
-    {
-        grounded = true;
-        velocity = 0;
-    }
+    /// <summary>
+    /// Returns the current player number
+    /// </summary>
+    /// <returns>Player number</returns>
     public int GetPlayerNumber()
     {
         return _playerNum;
     }
+    /// <summary>
+    /// Returns the current blocking state of the player
+    /// </summary>
+    /// <returns>Blocking state</returns>
     public bool GetBlockingState()
     {
         return _isBlocking;
