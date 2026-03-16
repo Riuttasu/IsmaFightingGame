@@ -113,6 +113,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Kick1",
+                    "type": "Button",
+                    "id": "7efce16f-88b3-4939-b704-df4322ae48f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Kick2",
+                    "type": "Button",
+                    "id": "e13bcd91-9484-4c58-9490-9b2adc1d488f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -487,6 +505,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Crush2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6dcdc291-4441-4031-92bc-f40e1c47ecf5",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Kick1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7703151-08e7-4289-9c88-ea71485ac4d6",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Kick2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

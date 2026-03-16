@@ -7,8 +7,9 @@ public class PlayerHitBoxManager : MonoBehaviour
     [Header("HurtBox")]
     [SerializeField] private BoxCollider2D PlayerHurtBox;
     [Header("Hitboxes")]
-    [SerializeField] private GameObject PunchHitBox;
-    [SerializeField] private GameObject CrushHitBox;
+    [SerializeField] private Collider2D PunchHitBox;
+    [SerializeField] private Collider2D CrushHitBox;
+    [SerializeField] private Collider2D KickHitBox;
     private Vector2 _originalHurtBoxSize;
     private Vector2 _originalHurtBoxOffset;
     private void Start()
@@ -20,7 +21,7 @@ public class PlayerHitBoxManager : MonoBehaviour
     {
         switch(_name)
         {
-            case "Punch": PunchHitBox.SetActive(_enabled); break;
+            case "Punch": PunchHitBox.enabled = _enabled; break;
             case "Crush": 
                 if (_enabled)
                 {
@@ -30,8 +31,9 @@ public class PlayerHitBoxManager : MonoBehaviour
                 {
                     OriginalHurtbox();
                 }
-                CrushHitBox.SetActive(_enabled);
+                CrushHitBox.enabled = _enabled;
                 break;
+            case "Kick": KickHitBox.enabled = _enabled; break;
             default: Debug.LogWarning("No Hitbox associated with said name"); break;
         }
     }

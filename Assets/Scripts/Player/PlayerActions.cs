@@ -61,6 +61,7 @@ public class PlayerActions : MonoBehaviour
             case "Block": Block(); break;
             case "Punch": Punch(); break;
             case "Crush": Crush(); break;
+            case "Kick": Kick(); break;
             default: break;
         }
     }
@@ -85,6 +86,13 @@ public class PlayerActions : MonoBehaviour
             pm.SetFallingState(true);
         }
     }
+    private void Kick()
+    {
+        if (pm.GetGroundedState() && _animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            _animator.SetTrigger("KickTrigger");
+        }
+    }
     #endregion
     // ---- Public methods ----
     #region Public methods
@@ -103,6 +111,10 @@ public class PlayerActions : MonoBehaviour
     public bool GetBlockingState()
     {
         return _isBlocking;
+    }
+    public void SetBlockingState(bool set)
+    {
+        _isBlocking = set;
     }
     #endregion
 }

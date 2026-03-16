@@ -14,7 +14,13 @@ public class AttackBehaviour : StateMachineBehaviour
         if (hbm == null)
         { Debug.LogError("Can't activate hitboxes if theres no manager"); Destroy(this); }
         else
-        { _hitBoxState = (_attackStart != 0); }
+        {
+            if(_attackStart == 0)
+            {
+                hbm.SetHitBox(_attackName, true);
+                _hitBoxState = true;
+            }
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
