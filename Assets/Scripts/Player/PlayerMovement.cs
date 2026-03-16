@@ -14,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction _moveAction, _jumpAction;
     private bool _isGrounded = true;
     private bool _isFalling = false;
-    private float velocity = 0f;
+    private float _velocity = 0f;
+    private float _feetOffset = 1f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
                 _animator.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
-                Move();
+                Move(_moveAction.ReadValue<Vector2>());
         }
         else
         {
@@ -57,8 +58,8 @@ public class PlayerMovement : MonoBehaviour
         // Physics
         if (!_isGrounded)
         {
-            transform.position += new Vector3(0, velocity * Time.deltaTime, 0);
-            velocity += Physics2D.gravity.y * Time.deltaTime;
+            transform.position += new Vector3(0, _velocity * Time.deltaTime, 0);
+            _velocity += Physics2D.gravity.y * Time.deltaTime;
         }
     }
     // ---- Actions-movement ----
@@ -66,15 +67,20 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// Reads the movement actions of the player and moves if theres no collider in the way
     /// </summary>
-    private void Move()
+    public void Move(Vector2 dir, bool IsKnockBack = false)
     {
-        InputAction _moveAction = InputSystem.actions.FindAction("Move" + _playerNum);
-        Vector2 dir = _moveAction.ReadValue<Vector2>();
-        Vector3 origin = new(transform.position.x, transform.position.y, 0);
+        Vector3 origin = new(transform.position.x, transform.position.y-_feetOffset, 0);
         if (!Physics2D.Raycast(origin, dir * Vector2.right, dir.magnitude))
         {
-            _animator.SetTrigger("WalkTrigger");
-            transform.position += new Vector3(dir.x * _speed * Time.deltaTime, 0, 0);
+            if (!IsKnockBack)
+            {
+                _animator.SetTrigger("WalkTrigger");
+                transform.position += new Vector3(dir.x * _speed * Time.deltaTime, 0, 0);
+            }
+            else
+            {
+                transform.position += new Vector3(dir.x * Time.deltaTime, 0, 0);
+            }
         }
     }
     /// <summary>
@@ -83,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        velocity += _jumpHeight;
+        _velocity += _jumpHeight;
         _isGrounded = false;
     }
     #endregion
@@ -95,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _isGrounded = true;
         if (_isFalling) { _animator.SetTrigger("CrushTrigger"); _isFalling = false; }
-        velocity = 0;
+        _velocity = 0;
     }
     /// <summary>
     /// Gets the current player's grounded state

@@ -25,7 +25,26 @@ public class AttackHitBox : MonoBehaviour
         // If knockback is meant to be applied
         if (_playerHit != null)
         {
-            float knockback = 1 - Mathf.Pow(1 - _knockbackLeft / KnockBack, 4);
+            // Removes player reference if knockback is gone
+            if (_knockbackLeft <= 0f)
+            {
+                _playerHit = null;
+            }
+            else
+            {
+                float t = 1 - _knockbackLeft / KnockBack;
+                float multi = 1 - (t*t);
+                // Calculates knockback to inflict
+                float knockback = KnockBack * multi;
+                // Gets player movement script to move player back
+                PlayerMovement pm = _playerHit.GetComponentInParent<PlayerMovement>();
+                if (pm != null)
+                {
+                    pm.Move(new Vector2(knockback, 0) * -_playerHit.transform.right,true);
+                }
+                // Reduces knockback left
+                _knockbackLeft -= knockback*Time.deltaTime;
+            }
         }
     }
 }
