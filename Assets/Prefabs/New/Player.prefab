@@ -575,13 +575,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 541c924ddf210ef469f80c77b07a5702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerNum: 1
-  _playerInputs:
+  PlayerNum: 1
+  PlayerInputs:
   - _name: Move
   - _name: Jump
-  _animator: {fileID: 6988388854679523299}
-  _speed: 5
-  _jumpHeight: 8
+  PlayerAnimator: {fileID: 6988388854679523299}
+  Speed: 5
+  JumpHeight: 3
+  HitOffSet: 0.2
 --- !u!114 &3939014165448322766
 MonoBehaviour:
   m_ObjectHideFlags: 0

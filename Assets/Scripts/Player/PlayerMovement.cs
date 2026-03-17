@@ -3,14 +3,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private int _playerNum = 1;
+    [SerializeField] private int PlayerNum = 1;
     [Header("Actions")]
-    [SerializeField] private List<PlayerInputActions> _playerInputs = new List<PlayerInputActions>();
+    [SerializeField] private List<PlayerInputActions> PlayerInputs = new List<PlayerInputActions>();
     [Header("Player Components")]
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator PlayerAnimator;
     [Header("Movement Parametres")]
-    [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _jumpHeight = 3f;
+    [SerializeField] private float Speed = 5f;
+    [SerializeField] private float JumpHeight = 3f;
+    [SerializeField] private float HitOffSet = 0.2f;
     private InputAction _moveAction, _jumpAction;
     private bool _isGrounded = true;
     private bool _isFalling = false;
@@ -19,10 +20,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        foreach (PlayerInputActions action in _playerInputs)
+        foreach (PlayerInputActions action in PlayerInputs)
         {
-            action.AssignedAction = InputSystem.actions.FindAction(action.Name + _playerNum);
-            if (action.AssignedAction == null) { Debug.LogWarning("No action found with the name: " + action.Name + _playerNum); }
+            action.AssignedAction = InputSystem.actions.FindAction(action.Name + PlayerNum);
+            if (action.AssignedAction == null) { Debug.LogWarning("No action found with the name: " + action.Name + PlayerNum); }
             else
             {
                 if (action.Name == "Move") { _moveAction = action.AssignedAction; }
@@ -37,19 +38,19 @@ public class PlayerMovement : MonoBehaviour
         // Walking
         if (_moveAction.IsPressed())
         {
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
-                _animator.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
+            if (PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
+                PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
                 Move(_moveAction.ReadValue<Vector2>());
         }
         else
         {
-            _animator.SetTrigger("EndWalk");
+            PlayerAnimator.SetTrigger("EndWalk");
         }
         // Jumping
         if (_jumpAction.WasPressedThisFrame())
         {
-            if ((_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
-                _animator.GetCurrentAnimatorStateInfo(0).IsName("Walking")) &&
+            if ((PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
+                PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Walking")) &&
                 _isGrounded)
             {
                 Jump();
@@ -69,19 +70,25 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void Move(Vector2 dir, bool IsKnockBack = false)
     {
-        Vector3 origin = new(transform.position.x, transform.position.y-_feetOffset, 0);
-        if (!Physics2D.Raycast(origin, dir * Vector2.right, dir.magnitude))
+        Vector3 origin = new(transform.position.x, transform.position.y - _feetOffset, 0);
+        RaycastHit2D hit = Physics2D.Raycast(origin, dir.normalized, dir.magnitude);
+        if (hit.collider == null)
         {
             if (!IsKnockBack)
             {
-                _animator.SetTrigger("WalkTrigger");
-                transform.position += new Vector3(dir.x * _speed * Time.deltaTime, 0, 0);
+                PlayerAnimator.SetTrigger("WalkTrigger");
+                transform.position += new Vector3(dir.x * Speed * Time.deltaTime, 0, 0);
             }
             else
             {
                 transform.position += new Vector3(dir.x * Time.deltaTime, 0, 0);
             }
         }
+        else if (IsKnockBack)
+        {
+            transform.position += new Vector3(dir.x * Time.deltaTime, 0, 0);
+        }
+
     }
     /// <summary>
     /// Impulses the player vertically depending on jumpheight
@@ -89,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        _velocity += _jumpHeight;
+        _velocity += JumpHeight;
         _isGrounded = false;
     }
     #endregion
@@ -100,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
     public void Ground()
     {
         _isGrounded = true;
-        if (_isFalling) { _animator.SetTrigger("CrushTrigger"); _isFalling = false; }
+        if (_isFalling) { PlayerAnimator.SetTrigger("CrushTrigger"); _isFalling = false; }
         _velocity = 0;
     }
     /// <summary>

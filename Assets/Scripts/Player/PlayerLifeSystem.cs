@@ -7,7 +7,7 @@ public class PlayerLifeSystem : MonoBehaviour
     private void Start()
     {
         pa = gameObject.GetComponentInParent<PlayerActions>();
-        if (pa != null )
+        if (pa != null)
         {
             playerNum = pa.GetPlayerNumber();
         }
@@ -18,19 +18,14 @@ public class PlayerLifeSystem : MonoBehaviour
         }
     }
     /// <summary>
-    /// Removes n hitpoints from the player if theres a GameManager present, 
-    /// has the capacity to change its sprite color too
+    /// Removes n hitpoints from the player if theres a GameManager present
     /// </summary>
     public void Hurt(int n)
     {
         if (GameManager.instance != null)
         {
-            // Not blocking, take n damage
-            if (!pa.GetBlockingState())
-            {
-                GameManager.instance.AddHp(-n, playerNum);
-            }
-            
+
+            GameManager.instance.AddHp(-n, playerNum);
         }
     }
 }
