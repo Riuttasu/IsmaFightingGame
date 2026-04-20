@@ -263,8 +263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6081723559585e48b3c294c60e0600d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  KnockBack: 0
+  DamageUnblocked: 5
+  DamageBlocked: 0
+  KnockBack: 0.5
 --- !u!1 &3329775902284613324
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,8 +504,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6081723559585e48b3c294c60e0600d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  KnockBack: 0
+  DamageUnblocked: 10
+  DamageBlocked: 2
+  KnockBack: 2
 --- !u!1 &6829621510376732279
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +583,7 @@ MonoBehaviour:
   - _name: Jump
   PlayerAnimator: {fileID: 6988388854679523299}
   Speed: 5
-  JumpHeight: 3
+  JumpHeight: 8
   HitOffSet: 0.2
 --- !u!114 &3939014165448322766
 MonoBehaviour:
@@ -743,5 +745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6081723559585e48b3c294c60e0600d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
-  KnockBack: 0
+  DamageUnblocked: 30
+  DamageBlocked: 5
+  KnockBack: 10

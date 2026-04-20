@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
                 else if (action.Name == "Jump") { _jumpAction = action.AssignedAction; }
             }
         }
+        // Starts falling so it touches the ground
+        _isGrounded = true; 
     }
 
     // Update is called once per frame

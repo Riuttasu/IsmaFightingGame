@@ -79,24 +79,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Reset",
-                    "type": "Button",
-                    "id": "2776c80d-3c14-4091-8c56-d04ced07a2b0",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Escape",
-                    "type": "Button",
-                    "id": "b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Crush1",
                     "type": "Button",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
@@ -127,6 +109,24 @@
                     "name": "Kick2",
                     "type": "Button",
                     "id": "e13bcd91-9484-4c58-9490-9b2adc1d488f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reset",
+                    "type": "Button",
+                    "id": "2776c80d-3c14-4091-8c56-d04ced07a2b0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -500,10 +500,10 @@
                 {
                     "name": "",
                     "id": "a2cc35eb-e564-483e-a4bf-8510815bc7c5",
-                    "path": "",
+                    "path": "<Keyboard>/m",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Crush2",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -522,10 +522,10 @@
                 {
                     "name": "",
                     "id": "c7703151-08e7-4289-9c88-ea71485ac4d6",
-                    "path": "",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Kick2",
                     "isComposite": false,
                     "isPartOfComposite": false

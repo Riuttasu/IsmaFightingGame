@@ -26,15 +26,18 @@ public class PlayerActions : MonoBehaviour
     [Header("Actions")]
     [SerializeField] private List<PlayerInputActions> _playerInputs = new List<PlayerInputActions>();
     #endregion
-    private bool _isFalling = false; private bool _isBlocking = false; private bool isCrushing = false;
+    private bool _isBlocking = false;
     private PlayerMovement pm;
+    private InputAction _blockAction;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         pm = gameObject.GetComponent<PlayerMovement>();
+        _animator.SetBool("IsBlocking", false);
         foreach (PlayerInputActions action in _playerInputs)
         {
             action.AssignedAction = InputSystem.actions.FindAction(action.Name + _playerNum);
+            if (action.Name == "Block") { _blockAction = action.AssignedAction; }
             if (action.AssignedAction == null) { Debug.LogWarning("No action found with the name: " + action.Name + _playerNum); }
         }
     }
@@ -47,6 +50,14 @@ public class PlayerActions : MonoBehaviour
             if (act.AssignedAction.IsPressed())
             {
                 DoAction(act.Name);
+            }
+        }
+        if (_isBlocking)
+        {
+            if (!_blockAction.IsPressed())
+            {
+                _isBlocking = false;
+                _animator.SetBool("IsBlocking", _isBlocking);
             }
         }
     }
@@ -72,11 +83,18 @@ public class PlayerActions : MonoBehaviour
     {
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         { _animator.SetTrigger("PunchTrigger"); }
+        else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Punch"))
+        {
+
+        }
     }
     private void Block()
     {
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-        { _animator.SetTrigger("BlockTrigger"); }
+        { 
+            _isBlocking = true;
+            _animator.SetBool("IsBlocking",_isBlocking);
+        }
     }
     private void Crush()
     {

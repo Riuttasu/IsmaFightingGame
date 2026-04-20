@@ -1,13 +1,25 @@
+using Unity.VisualScripting;
 using UnityEngine;
 /// <summary>
 /// Component for attack hurtboxes, when it collides with a player, deals n damage to them
 /// </summary>
 public class AttackHitBox : MonoBehaviour
 {
+    /// <summary>
+    /// Damage the attack will deal to the player (unblocked)
+    /// </summary>
     [SerializeField]
-    private int damage = 0; // Damage the attack will deal to player
+    private int DamageUnblocked = 0;
+    /// <summary>
+    /// Damage the attack will deal to the player (blocked)
+    /// </summary>
     [SerializeField]
-    private float KnockBack = 0f; // Knockback the attack will deal to player
+    private int DamageBlocked = 0;
+    /// <summary>
+    /// Knockback the attack will deal to the player
+    /// </summary>
+    [SerializeField]
+    private float KnockBack = 0f;
     private GameObject _playerHit;
     private float _knockbackLeft = 0f;
     private float _distance = 0f;
@@ -18,10 +30,10 @@ public class AttackHitBox : MonoBehaviour
         if (pls != null) // Has collided with a player (with layer matrix, shouldnt hit self)
         {
             PlayerActions pa = collision.gameObject.GetComponentInParent<PlayerActions>();
-            if (!pa.GetBlockingState())
+            if (pa != null && !pa.GetBlockingState())
             {
                 // Damage
-                pls.Hurt(damage); 
+                pls.Hurt(DamageUnblocked);
                 // Knockback
                 _playerHit = pls.gameObject.transform.parent.gameObject; // The player hit
                 Vector2 dir = -_playerHit.transform.right; // Direction to push the player
@@ -35,6 +47,11 @@ public class AttackHitBox : MonoBehaviour
                     _distance = hit.distance - 0.2f; // If theres a wall, aplly partial knockback equal to distance
                 }
                 _knockbackLeft = _distance; // Knockback left is whatever was calculated
+            }
+            // Atack was blocked, deal no knockback but deal blocked damage
+            else if (pa != null)
+            {
+                pls.Hurt(DamageBlocked);
             }
         }
     }
